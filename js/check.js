@@ -42,4 +42,5 @@ function getMessage(a, b) {
         return(sum);
       }
       break;
+  }
 }
