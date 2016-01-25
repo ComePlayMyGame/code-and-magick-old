@@ -23,7 +23,7 @@ function getMessage(a, b) {
       break;
     case 'object':
       if (typeof(b) == 'object') {
-        if (a.lenght > b.lenght) {
+        if (a.length > b.length) {
           return ('Я прошёл ' + sumLength(b, a) + ' метров');
         } else {
           return ('Я прошёл ' + sumLength(a, b) + ' метров');
