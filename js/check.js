@@ -1,19 +1,13 @@
-var a;
-var b;
-var sum;
-var length;
-var summaryLenght
-
-function sumLenght (a1, b1) {
-  for (i = 0; i < a1.lenght; i++) {
-    summaryLenght += a1[i]*b1[i];
+function sumLength (a, b) {
+  var length = 0;
+  for (var j = 0; j < a.length; j++) {
+    length += (a[j]*b[j]);
   }
-  return summaryLenght;
+  return length;
 }
 
 function getMessage(a, b) {
-  a = prompt('Введите значение переменной a', a);
-  b = prompt('Введите значение переменной b', b);
+  var sum = 0;
 
   switch(typeof(a)) {
     case 'boolean':
@@ -27,19 +21,19 @@ function getMessage(a, b) {
     case 'number':
       return('Я прыгнул на ' + a*100 + ' сантиметров');
       break;
-    case 'array':
-      if (typeof(b) == 'array') {
+    case 'object':
+      if (typeof(b) == 'object') {
         if (a.lenght > b.lenght) {
-          return sumLenght (b, a);
-        } else if (a.lenght <= b.lenght) {
-          return sumLenght (a, b);
+          return ('Я прошёл ' + sumLength(b, a) + ' метров');
+        } else {
+          return ('Я прошёл ' + sumLength(a, b) + ' метров');
         }
       }
       else {
-        for (i = 0; i < a.lenght; i++) {
+        for (var i = 0; i < a.length; i++) {
           sum += a[i];
         }
-        return(sum);
+        return('Я прошёл ' + sum + ' шагов');
       }
       break;
   }
