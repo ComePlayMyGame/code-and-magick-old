@@ -22,14 +22,14 @@ function getMessage(a, b) {
       return('Я прыгнул на ' + a*100 + ' сантиметров');
       break;
     case 'object':
-      if (typeof(b) == 'object') {
+      if (Array.isArray(a) && Array.isArray(b)) {
         if (a.length > b.length) {
           return ('Я прошёл ' + sumLength(b, a) + ' метров');
         } else {
           return ('Я прошёл ' + sumLength(a, b) + ' метров');
         }
       }
-      else {
+      else if (Array.isArray(a)) {
         for (var i = 0; i < a.length; i++) {
           sum += a[i];
         }
