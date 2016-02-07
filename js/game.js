@@ -378,8 +378,8 @@
       var words = text.split(' ');
       var countWords = words.length;
       var line = '';
-      var marginTop = 320;
-      var marginLeft = 100;
+      var marginTop = 100;
+      var marginLeft = 320;
       var maxWidth = 240;
       var lineHeight = 20;
       for (var n = 0; n < countWords; n++) {
