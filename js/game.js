@@ -374,13 +374,12 @@
       }
     },
 
-    _drawText: function(text, context) {
+    _drawText: function(text, context, maxWidth) {
       var words = text.split(' ');
       var countWords = words.length;
       var line = '';
       var marginTop = 100;
       var marginLeft = 320;
-      var maxWidth = 240;
       var lineHeight = 20;
       for (var n = 0; n < countWords; n++) {
         var testLine = line + words[n] + ' ';
@@ -396,7 +395,7 @@
       context.fillText(line, marginLeft, marginTop);
     },
 
-    _drawQuote: function(text) {
+    _drawQuote: function(text, maxWidth) {
       this.ctx.fillStyle = '#FFFFFF';
       this.ctx.shadowOffsetX = 10;
       this.ctx.shadowOffsetY = 10;
@@ -415,7 +414,7 @@
       this.ctx.shadowOffsetY = 0;
       this.ctx.shadowColor = 'rgb(0, 0, 0)';
       this.ctx.fillStyle = '#000000';
-      this._drawText(text, this.ctx);
+      this._drawText(text, this.ctx, maxWidth);
     },
 
     /**
@@ -423,18 +422,19 @@
      */
     _drawPauseScreen: function() {
       this.ctx.font = '16px PT Mono';
+      var maxWidth = 240;
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          this._drawQuote('Ты победил!');
+          this._drawQuote('Ты победил!', maxWidth);
           break;
         case Verdict.FAIL:
-          this._drawQuote('Ты проиграл!');
+          this._drawQuote('Ты проиграл!', maxWidth);
           break;
         case Verdict.PAUSE:
-          this._drawQuote('Игра поставлена на паузу');
+          this._drawQuote('Игра поставлена на паузу', maxWidth);
           break;
         case Verdict.INTRO:
-          this._drawQuote('Я умею перемещаться и летать по нажатию на стрелки. А если нажать шифт, я выстрелю фаерболом');
+          this._drawQuote('Я умею перемещаться и летать по нажатию на стрелки. А если нажать шифт, я выстрелю фаерболом', maxWidth);
           break;
       }
     },
