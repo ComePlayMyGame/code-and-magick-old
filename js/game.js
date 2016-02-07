@@ -404,8 +404,8 @@
       this.ctx.moveTo(295, 245);
       this.ctx.lineTo(310, 230);
       this.ctx.lineTo(310, 75);
-      this.ctx.lineTo(580, 70);
-      this.ctx.lineTo(570, 250);
+      this.ctx.lineTo(maxWidth + 340, 70);
+      this.ctx.lineTo(maxWidth + 330, 250);
       this.ctx.lineTo(330, 255);
       this.ctx.lineTo(310, 245);
       this.ctx.lineTo(295, 245);
