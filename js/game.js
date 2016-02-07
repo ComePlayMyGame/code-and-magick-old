@@ -422,19 +422,18 @@
      */
     _drawPauseScreen: function() {
       this.ctx.font = '16px PT Mono';
-      var maxWidth = 240;
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          this._drawQuote('Ты победил!', maxWidth);
+          this._drawQuote('Ты победил!', 100);
           break;
         case Verdict.FAIL:
-          this._drawQuote('Ты проиграл!', maxWidth);
+          this._drawQuote('Ты проиграл!', 120);
           break;
         case Verdict.PAUSE:
-          this._drawQuote('Игра поставлена на паузу', maxWidth);
+          this._drawQuote('Игра поставлена на паузу', 150);
           break;
         case Verdict.INTRO:
-          this._drawQuote('Я умею перемещаться и летать по нажатию на стрелки. А если нажать шифт, я выстрелю фаерболом', maxWidth);
+          this._drawQuote('Я умею перемещаться и летать по нажатию на стрелки. А если нажать шифт, я выстрелю фаерболом', 240);
           break;
       }
     },
