@@ -374,22 +374,66 @@
       }
     },
 
+    _drawText: function(text, context, maxWidth) {
+      var words = text.split(' ');
+      var countWords = words.length;
+      var line = '';
+      var marginTop = 100;
+      var marginLeft = 320;
+      var lineHeight = 20;
+      for (var n = 0; n < countWords; n++) {
+        var testLine = line + words[n] + ' ';
+        var testWidth = context.measureText(testLine).width;
+        if (testWidth > maxWidth) {
+          context.fillText(line, marginLeft, marginTop);
+          line = words[n] + ' ';
+          marginTop += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      context.fillText(line, marginLeft, marginTop);
+    },
+
+    _drawQuote: function(text, maxWidth) {
+      this.ctx.fillStyle = '#FFFFFF';
+      this.ctx.shadowOffsetX = 10;
+      this.ctx.shadowOffsetY = 10;
+      this.ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+      this.ctx.beginPath();
+      this.ctx.moveTo(295, 245);
+      this.ctx.lineTo(310, 230);
+      this.ctx.lineTo(310, 75);
+      this.ctx.lineTo(maxWidth + 340, 70);
+      this.ctx.lineTo(maxWidth + 330, 250);
+      this.ctx.lineTo(330, 255);
+      this.ctx.lineTo(310, 245);
+      this.ctx.lineTo(295, 245);
+      this.ctx.fill();
+      this.ctx.shadowOffsetX = 0;
+      this.ctx.shadowOffsetY = 0;
+      this.ctx.shadowColor = 'rgb(0, 0, 0)';
+      this.ctx.fillStyle = '#000000';
+      this._drawText(text, this.ctx, maxWidth);
+    },
+
     /**
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      this.ctx.font = '16px PT Mono';
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          this._drawQuote('Ты победил!', 100);
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          this._drawQuote('Ты проиграл!', 120);
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          this._drawQuote('Игра поставлена на паузу', 150);
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          this._drawQuote('Я умею перемещаться и летать по нажатию на стрелки. А если нажать шифт, я выстрелю фаерболом', 240);
           break;
       }
     },
