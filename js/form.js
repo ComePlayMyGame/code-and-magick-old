@@ -16,81 +16,59 @@
   };
 
   var review = formContainer.querySelector('.review-form');
-  var marks = review.querySelectorAll('.review-mark-label');
+  var marks = review.elements['review-mark'];
   var userName = review.querySelector('.review-form-field-name');
   var reviewDescription = review.querySelector('.review-form-field-text');
   var submitReview = review.querySelector('.review-submit');
   var hintsContainer = review.querySelector('.review-fields');
   var hintUserName = hintsContainer.querySelector('.review-fields-name');
-  var hintReviewDesciption = hintsContainer.querySelector('.review-fields-text');
-  var minGoodRating = 3;
-  //Начальные данные
+  var hintReviewDescription = hintsContainer.querySelector('.review-fields-text');
+
   userName.required = true;
-  submitReview.disabled = true;
-  setVisibileIfInputValid();
-  setMarksEvent();
+  setSubmitButtonEnableAndSetHintsInvisible();
+
+  for (var i = 0; i < marks.length; i++) {
+    marks[i].onchange = function() {
+      setSubmitButtonEnableAndSetHintsInvisible();
+    };
+  }
 
   userName.onkeyup = function() {
-    setVisibileIfInputValid();
-    if (userName.validity.valid) {
-      submitReview.disabled = !formIsValid();
-    } else {
-      submitReview.disabled = true;
-    }
+    setSubmitButtonEnableAndSetHintsInvisible();
   };
 
   reviewDescription.onkeyup = function() {
-    setVisibileIfInputValid();
-    if (reviewDescription.validity.valid) {
-      submitReview.disabled = !formIsValid();
-    } else {
-      submitReview.disabled = true;
-    }
+    setSubmitButtonEnableAndSetHintsInvisible();
   };
 
-  function setMarksEvent() {
-    minGoodRating -= 1;
-    for (var i = 0; i < marks.length; i++) {
-      if (i < minGoodRating) {
-        marks[i].onclick = function() {
-          reviewDescription.required = true;
-          setVisibileIfInputValid();
-          submitReview.disabled = (userName.validity.valid && reviewDescription.validity.valid);
-        };
-      } else {
-        marks[i].onclick = function() {
-          reviewDescription.required = false;
-          setVisibileIfInputValid();
-          submitReview.disabled = userName.validity.valid;
-        };
-      }
-    }
-  }
+  userName.onchange = function() {
+    setSubmitButtonEnableAndSetHintsInvisible();
+  };
 
-  function setVisibileIfInputValid() {
-    if (userName.validity.valid) {
-      hintUserName.classList.add('invisible');
-      if (reviewDescription.validity.valid) {
-        hintReviewDesciption.classList.add('invisible');
-        hintsContainer.classList.add('invisible');
-      } else {
-        hintReviewDesciption.classList.remove('invisible');
-        hintsContainer.classList.remove('invisible');
-      }
+  reviewDescription.onchange = function() {
+    setSubmitButtonEnableAndSetHintsInvisible();
+  };
+
+  function setSubmitButtonEnableAndSetHintsInvisible() {
+    reviewDescription.required = review['review-mark'].value < 3;
+    var isUserValid = isFieldValid(userName, hintUserName);
+    var isReviewValid = isFieldValid(reviewDescription, hintReviewDescription);
+
+    if (isUserValid && isReviewValid) {
+      hintsContainer.classList.add('invisible');
     } else {
-      hintUserName.classList.remove('invisible');
       hintsContainer.classList.remove('invisible');
     }
+    submitReview.disabled = !(isUserValid && isReviewValid);
   }
 
-  function formIsValid() {
-    var isValid = true;
-    for (var i = 0; i < review.length; i++) {
-      isValid = review[i].validity.valid;
-      if (!isValid) {
-        break;
-      }
+  function isFieldValid(fieldName, hintFieldName) {
+    var isValid = fieldName.validity.valid;
+    if (isValid) {
+      hintFieldName.classList.add('invisible');
+    } else {
+      hintFieldName.classList.remove('invisible');
     }
-    return isValid;
+    return !fieldName.required || fieldName.required && isValid;
   }
 })();
