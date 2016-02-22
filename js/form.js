@@ -63,7 +63,7 @@
 
     myBday.setDate(BDAY_DATE);
     myBday.setMonth(BDAY_MONTH - 1);
-    if (!((currentDate - myBday) > 0)) {
+    if (currentDate - myBday < 0) {
       myBday.setFullYear(currentYear - 1);
     }
     daysFromBday = currentDate - myBday;
