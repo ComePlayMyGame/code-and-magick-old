@@ -1,3 +1,4 @@
+/*global docCookies*/
 'use strict';
 
 (function() {
@@ -25,6 +26,7 @@
   var hintReviewDescription = hintsContainer.querySelector('.review-fields-text');
 
   userName.required = true;
+  setValuesFromCookies();
   setSubmitButtonEnableAndSetHintsInvisible();
 
   for (var i = 0; i < marks.length; i++) {
@@ -48,6 +50,37 @@
   reviewDescription.onchange = function() {
     setSubmitButtonEnableAndSetHintsInvisible();
   };
+
+  review.onsubmit = function(evt) {
+    evt.preventDefault();
+    var currentDate = new Date();
+    var myBday = new Date(currentDate);
+    var currentYear = currentDate.getFullYear();
+    var daysFromBday;
+    var formattedDateToExpire;
+    var BDAY_MONTH = 9;
+    var BDAY_DATE = 26;
+
+    myBday.setDate(BDAY_DATE);
+    myBday.setMonth(BDAY_MONTH - 1);
+    if (currentDate - myBday < 0) {
+      myBday.setFullYear(currentYear - 1);
+    }
+    daysFromBday = currentDate - myBday;
+    formattedDateToExpire = new Date(+currentDate + daysFromBday);
+    docCookies.setItem('name', userName.value.toString(), formattedDateToExpire);
+    docCookies.setItem('rating', review['review-mark'].value.toString(), formattedDateToExpire);
+    review.submit();
+  };
+
+  function setValuesFromCookies() {
+    if (docCookies.hasItem('name')) {
+      userName.value = docCookies.getItem('name');
+    }
+    if (docCookies.hasItem('rating')) {
+      marks[(docCookies.getItem('rating') - 1)].checked = true;
+    }
+  }
 
   function setSubmitButtonEnableAndSetHintsInvisible() {
     reviewDescription.required = review['review-mark'].value < 3;
