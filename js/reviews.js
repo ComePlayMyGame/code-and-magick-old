@@ -11,6 +11,7 @@
   var XHR_TIMEOUT = 10000;
   var xhr = new XMLHttpRequest();
   var loadedReviews = [];
+  var activeFilter = 'reviews-all';
 
   reviewsFilterContainer.classList.add('invisible');
   reviewsSection.classList.add('reviews-list-loading');
@@ -98,9 +99,13 @@
     var filteredReviews = loadedReviews.slice(0);
     var SIX_WEEKS = 42 * 24 * 60 * 60 * 1000;
     var NEUTRAL_RATING = 3;
+    if (activeFilter === id) {
+      return;
+    }
     switch (id) {
       case 'reviews-all':
         filteredReviews = loadedReviews;
+        activeFilter = 'reviews-all';
         break;
       case 'reviews-recent':
         filteredReviews = filteredReviews.filter(function(item) {
@@ -108,6 +113,7 @@
         }).sort(function(a, b) {
           return Date.parse(b.date) - Date.parse(a.date);
         });
+        activeFilter = 'reviews-recent';
         break;
       case 'reviews-good':
         filteredReviews = filteredReviews.filter(function(item) {
@@ -115,6 +121,7 @@
         }).sort(function(a, b) {
           return b.rating - a.rating;
         });
+        activeFilter = 'reviews-good';
         break;
       case 'reviews-bad':
         filteredReviews = filteredReviews.filter(function(item) {
@@ -122,11 +129,13 @@
         }).sort(function(a, b) {
           return a.rating - b.rating;
         });
+        activeFilter = 'reviews-bad';
         break;
       case 'reviews-popular':
         filteredReviews = filteredReviews.sort(function(a, b) {
           return b.review_usefulness - a.review_usefulness;
         });
+        activeFilter = 'reviews-popular';
         break;
     }
     renderReviews(filteredReviews);
