@@ -96,27 +96,29 @@
 
   function setActiveFilter(id) {
     var filteredReviews = loadedReviews.slice(0);
+    var SIX_WEEKS = 42 * 24 * 60 * 60 * 1000;
+    var NEUTRAL_RATING = 3;
     switch (id) {
       case 'reviews-all':
         filteredReviews = loadedReviews;
         break;
       case 'reviews-recent':
         filteredReviews = filteredReviews.filter(function(item) {
-          return Date.parse(item.date) > (Date.now() - 42 * 24 * 60 * 60 * 1000);
+          return Date.parse(item.date) > (Date.now() - SIX_WEEKS);
         }).sort(function(a, b) {
           return Date.parse(b.date) - Date.parse(a.date);
         });
         break;
       case 'reviews-good':
         filteredReviews = filteredReviews.filter(function(item) {
-          return item.rating > 2;
+          return item.rating >= NEUTRAL_RATING;
         }).sort(function(a, b) {
           return b.rating - a.rating;
         });
         break;
       case 'reviews-bad':
         filteredReviews = filteredReviews.filter(function(item) {
-          return item.rating < 3;
+          return item.rating < NEUTRAL_RATING;
         }).sort(function(a, b) {
           return a.rating - b.rating;
         });
