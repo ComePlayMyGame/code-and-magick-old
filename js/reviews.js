@@ -9,6 +9,8 @@
   var ratingValue = ['review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
   var IMAGE_TIMEOUT = 3000;
   var XHR_TIMEOUT = 10000;
+  var SIX_WEEKS = 42 * 24 * 60 * 60 * 1000;
+  var NEUTRAL_RATING = 3;
   var xhr = new XMLHttpRequest();
   var loadedReviews = [];
   var activeFilter = 'reviews-all';
@@ -96,12 +98,10 @@
   }
 
   function setActiveFilter(id) {
-    var filteredReviews = loadedReviews.slice(0);
-    var SIX_WEEKS = 42 * 24 * 60 * 60 * 1000;
-    var NEUTRAL_RATING = 3;
     if (activeFilter === id) {
       return;
     }
+    var filteredReviews = loadedReviews.slice(0);
     switch (id) {
       case 'reviews-all':
         filteredReviews = loadedReviews;
