@@ -23,14 +23,14 @@
 
   reviewsFilterContainer.addEventListener('click', function(evt) {
     var selectedElement = evt.target;
-    if (selectedElement.classList.contains('reviews-filter-item')) {
-      setActiveFilter(selectedElement.htmlFor);
+    if (selectedElement.checked === true) {
+      setActiveFilter(selectedElement.value);
     }
   });
 
-  showMoreReviewsButton.onclick = function() {
+  showMoreReviewsButton.addEventListener('click', function() {
     renderReviews(filteredReviews, ++currentPage, false);
-  };
+  });
 
   getReviews();
 
