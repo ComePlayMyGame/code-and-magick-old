@@ -240,24 +240,25 @@
 
   var clouds = document.querySelector('.header-clouds');
   var demoBlock = document.querySelector('.demo');
-  var canCloudsShift = true;
+  var pageScrollTimeout;
   var CLOUDS_TIMEOUT = 100;
-  var cloudsOffset = 0;
-
-  setInterval(function() {
-    canCloudsShift = cloudsOffset > 0;
-    if (demoBlock.getBoundingClientRect().bottom <= 0) {
-      game.setGameStatus(window.Game.Verdict.PAUSE);
-    }
-    console.log(clouds.style.backgroundPosition);
-  }, CLOUDS_TIMEOUT);
+  var canCloudsShift = true;
+  var isCloudsVisible = true;
 
   window.addEventListener('scroll', function() {
-    cloudsOffset = clouds.getBoundingClientRect().height - window.scrollY;
+    var cloudsOffset = clouds.getBoundingClientRect().height - window.scrollY;
 
     if (canCloudsShift) {
       clouds.style.backgroundPosition = cloudsOffset + 'px';
     }
+    clearTimeout(pageScrollTimeout);
+    pageScrollTimeout = setTimeout(function() {
+      if (demoBlock.getBoundingClientRect().bottom <= 0) {
+        game.setGameStatus(window.Game.Verdict.PAUSE);
+      }
+      isCloudsVisible = cloudsOffset > 0;
+    }, CLOUDS_TIMEOUT);
+    canCloudsShift = isCloudsVisible;
   });
 
   /**
