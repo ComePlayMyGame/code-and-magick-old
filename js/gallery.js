@@ -48,5 +48,15 @@
     }
   };
 
+  var gallerySection = document.querySelector('.photogallery');
+  var pictures = gallerySection.querySelectorAll('.photogallery-image');
+
+  Array.prototype.forEach.call(pictures, function(item) {
+    item.addEventListener('click', function() {
+      var picture = new Gallery();
+      picture.show();
+    });
+  });
+
   window.Gallery = Gallery;
 })();
