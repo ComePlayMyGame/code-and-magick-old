@@ -9,8 +9,8 @@
 
     this._onCloseClick = this._onCloseClick.bind(this);
     this._onDocumentKeyDown = this._onDocumentKeyDown.bind(this);
-    this.leftControl = this.leftControl.bind(this);
-    this.rightControl = this.rightControl.bind(this);
+    this._onLeftClick = this._onLeftClick.bind(this);
+    this._onRightClick = this._onRightClick.bind(this);
   }
 
   Gallery.prototype.show = function() {
