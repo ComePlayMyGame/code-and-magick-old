@@ -241,10 +241,18 @@
   var clouds = document.querySelector('.header-clouds');
   var demoBlock = document.querySelector('.demo');
   var pageScrollTimeout;
+  /**
+   * Задержка проверки видимости облаков в милисекундах
+   * @const {number}
+   * */
   var CLOUDS_TIMEOUT = 100;
   var canCloudsShift = true;
   var isCloudsVisible = true;
 
+  /**
+   * Обработчик прокрутки страницы
+   * и сдвига облаков влево/вправо, в зависимости от прокрутки
+   * */
   window.addEventListener('scroll', function() {
     var cloudsOffset = clouds.getBoundingClientRect().height - window.scrollY;
 
