@@ -43,7 +43,6 @@
     var currentImage = new Image();
     this.currentImageCounter = number;
 
-    currentImage.src = this.Photos[number].src;
     if (previousImage) {
       this.previewContainer.removeChild(previousImage);
     }
