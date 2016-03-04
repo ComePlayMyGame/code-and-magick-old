@@ -6,6 +6,9 @@
     this.galleryCloseButton = this.galleryOverlay.querySelector('.overlay-gallery-close');
     this.leftControl = this.galleryOverlay.querySelector('.overlay-gallery-control-left');
     this.rightControl = this.galleryOverlay.querySelector('.overlay-gallery-control-right');
+    this.previewContainer = this.galleryOverlay.querySelector('.overlay-gallery-preview');
+    this.currentPhotoNumberElement = this.previewContainer.querySelector('.preview-number-current');
+    this.totalPhotosNumberElement = this.previewContainer.querySelector('.preview-number-total');
 
     this._onCloseClick = this._onCloseClick.bind(this);
     this._onDocumentKeyDown = this._onDocumentKeyDown.bind(this);
@@ -30,16 +33,39 @@
     document.removeEventListener('keydown', this._onDocumentKeyDown);
   };
 
+  Gallery.prototype.setPictures = function(Photo) {
+    this.Photos = Photo.slice(0);
+    this.totalPhotosNumber = this.Photos.length;
+  };
+
+  Gallery.prototype.setCurrentPicture = function(number) {
+    var previousImage = this.previewContainer.querySelector('img');
+    var currentImage = new Image();
+    this.currentImageCounter = number;
+
+    currentImage.src = this.Photos[number].src;
+    if (previousImage) {
+      this.previewContainer.removeChild(previousImage);
+    }
+    this.previewContainer.appendChild(currentImage);
+    this.currentPhotoNumberElement.textContent = number + 1;
+    this.totalPhotosNumberElement.textContent = this.Photos.length;
+  };
+
   Gallery.prototype._onCloseClick = function() {
     this.hide();
   };
 
   Gallery.prototype._onLeftClick = function() {
-    console.log('клик по кнопке влево');
+    if (this.currentImageCounter > 0) {
+      this.setCurrentPicture(this.currentImageCounter - 1);
+    }
   };
 
   Gallery.prototype._onRightClick = function() {
-    console.log('клик по кнопке вправо');
+    if (this.currentImageCounter < this.totalPhotosNumber - 1) {
+      this.setCurrentPicture(this.currentImageCounter + 1);
+    }
   };
 
   Gallery.prototype._onDocumentKeyDown = function(evt) {
