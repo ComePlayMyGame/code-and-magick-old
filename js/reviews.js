@@ -5,21 +5,40 @@
   var reviewsFilterContainer = document.querySelector('.reviews-filter');
   var reviewsListContainer = document.querySelector('.reviews-list');
   var reviewsSection = document.querySelector('.reviews');
-
   var showMoreReviewsButton = document.querySelector('.reviews-controls-more');
+  /**
+   * Таймаут для XHR сессии
+   * @const {number}
+   * */
   var XHR_TIMEOUT = 10000;
+  /**
+   * Кол-во милисекунд в 6-ти неделях
+   * @const {number}
+   * */
   var SIX_WEEKS = 42 * 24 * 60 * 60 * 1000;
+  /**
+   * Средний рейтинг, который будет влиять на необходимость поля Описание
+   * @const {number}
+   * */
   var NEUTRAL_RATING = 3;
   var xhr = new XMLHttpRequest();
   var loadedReviews = [];
   var filteredReviews = [];
   var activeFilter = 'reviews-all';
+  /**
+   * Размер одной страницы отзывов
+   * @const {number}
+   * */
   var PAGE_SIZE = 3;
   var currentPage = 0;
 
   reviewsFilterContainer.classList.add('invisible');
   reviewsSection.classList.add('reviews-list-loading');
 
+  /**
+   * Добавляем обработчик событий по нажатию на фильтры в отзывах,
+   * который устанавливает выбранный фильтр
+   * */
   reviewsFilterContainer.addEventListener('click', function(evt) {
     var selectedElement = evt.target;
     if (selectedElement.checked === true) {
@@ -27,12 +46,19 @@
     }
   });
 
+  /**
+   * Добавляем обработчик событий, который срабатывает по нажатию на кнопку
+   * "Еще отзывы" и добавляет в конец списка отзывы, если еще есть подходящие
+   * */
   showMoreReviewsButton.addEventListener('click', function() {
     renderReviews(filteredReviews, ++currentPage, false);
   });
 
   getReviews();
 
+  /**
+   * Загрузка списка отзывов и отработка ошибок при загрузке
+   * */
   function getReviews() {
     xhr.open('GET', '//o0.github.io/assets/json/reviews.json');
     xhr.timeout = XHR_TIMEOUT;
@@ -53,6 +79,12 @@
     xhr.send();
   }
 
+  /**
+   *
+   * @param {Array.<object>} reviews
+   + @param {number} pageNumber
+   + @param {boolean=} replace
+   * */
   function renderReviews(reviews, pageNumber, replace) {
     var fragment = document.createDocumentFragment();
     var from = pageNumber * PAGE_SIZE;
@@ -76,6 +108,10 @@
     reviewsListContainer.appendChild(fragment);
   }
 
+  /**
+   * Установка выбранного фильтра
+   * @param {string} id
+   * */
   function setActiveFilter(id) {
     var renderedElements = reviewsListContainer.querySelectorAll('.review');
 

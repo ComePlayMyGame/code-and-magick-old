@@ -58,7 +58,15 @@
     var currentYear = currentDate.getFullYear();
     var daysFromBday;
     var formattedDateToExpire;
+    /**
+     * Месяц моего дня рождения
+     * @const {number}
+     * */
     var BDAY_MONTH = 9;
+    /**
+     * День месяца
+     * @const{number}
+     * */
     var BDAY_DATE = 26;
 
     myBday.setDate(BDAY_DATE);
@@ -73,6 +81,9 @@
     review.submit();
   };
 
+  /**
+   * Устанавливает значение имени пользователя и рейтинга из cookies
+   * */
   function setValuesFromCookies() {
     if (docCookies.hasItem('name')) {
       userName.value = docCookies.getItem('name');
@@ -82,6 +93,9 @@
     }
   }
 
+  /**
+   * Делает кнопку отправки активной или неактивной и показывает подсказки для не заполненных полей
+   * */
   function setSubmitButtonEnableAndSetHintsInvisible() {
     reviewDescription.required = review['review-mark'].value < 3;
     var isUserValid = isFieldValid(userName, hintUserName);
@@ -95,6 +109,12 @@
     submitReview.disabled = !(isUserValid && isReviewValid);
   }
 
+  /**
+   * Проверяет заполнено ли поле формы и убирает подсказку, если заполнено
+   * @param {Element} fieldName
+   * @param {Element} hint
+   * @returns {boolean}
+   * */
   function isFieldValid(fieldName, hintFieldName) {
     var isValid = fieldName.validity.valid;
     if (isValid) {
