@@ -1,13 +1,31 @@
 'use strict';
 
 (function() {
+  /**
+   * Контруктор объекта отзыва
+   * @param {Element} data
+   * @constructor
+   * */
   function Review(data) {
     this._data = data;
   }
 
+  /**
+   * Метод отрисовки отзыва на странице
+   * @method render
+   * @return {Node|*}
+   * */
   Review.prototype.render = function() {
     var template = document.querySelector('#review-template');
+    /**
+     * Массив из названия классов для рейтинга отзыва
+     *  @type {Array.<string>}
+     * */
     var ratingValue = ['review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
+    /**
+     * Кол-во милисекунд для ожидания загрузки изображения
+     * @const {number}
+     * */
     var IMAGE_TIMEOUT = 3000;
 
     if ('content' in template) {
@@ -23,6 +41,9 @@
     var imageToReplace = this.element.querySelector('.review-author');
     var reviewAuthorImage = new Image();
 
+    /**
+     * Обработчик загрузки изображения
+     * */
     reviewAuthorImage.onload = function() {
       clearTimeout(imageLoadTimeout);
       this.element.replaceChild(reviewAuthorImage, imageToReplace);
@@ -33,6 +54,9 @@
       reviewAuthorImage.title = this._data.author.name;
     }.bind(this);
 
+    /**
+     * Обработчик ошибки при загрузке изображения или его отсутствии
+     * */
     reviewAuthorImage.onerror = function() {
       reviewAuthorImage.src = '';
       this.element.classList.add('review-load-failure');
