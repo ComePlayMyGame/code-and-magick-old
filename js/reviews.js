@@ -66,8 +66,7 @@
     xhr.onload = function(evt) {
       loadedReviews = JSON.parse(evt.target.response);
       filteredReviews = loadedReviews;
-
-      renderReviews(loadedReviews, currentPage, true);
+      setActiveFilter(activeFilter);
       reviewsSection.classList.remove('reviews-list-loading');
     };
     xhr.error = function() {
@@ -117,9 +116,6 @@
   function setActiveFilter(id) {
     var renderedElements = reviewsListContainer.querySelectorAll('.review');
 
-    if (activeFilter === id) {
-      return;
-    }
     currentPage = 0;
     filteredReviews = loadedReviews.slice(0);
     switch (id) {
@@ -154,6 +150,7 @@
         break;
     }
     activeFilter = id;
+    reviewsFilterContainer[activeFilter].checked = true;
     localStorage.setItem('activeFilter', id);
 
     Array.prototype.forEach.call(renderedElements, function(element) {
