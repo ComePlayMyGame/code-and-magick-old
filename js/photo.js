@@ -5,5 +5,5 @@
     this.element = photo;
   }
 
-  window.Photo = Photo;
+  module.exports = Photo;
 })();

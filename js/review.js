@@ -48,5 +48,5 @@
     return this.element;
   };
 
-  window.Review = Review;
+  module.exports = Review;
 })();

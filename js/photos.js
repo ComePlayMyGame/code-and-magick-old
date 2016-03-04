@@ -1,10 +1,11 @@
-/*global Photo, Gallery*/
 'use strict';
 
 (function() {
+  var Photo = require('photo');
+  var Gallery = require('gallery');
   var photosContainer = document.querySelector('.photogallery');
   var photoGallery = photosContainer.querySelectorAll('.photogallery-image');
-  var gallery = new window.Gallery();
+  var gallery = new Gallery();
 
   var currentPhotoGallery = Array.prototype.map.call(photoGallery, function(item) {
     return new Photo(item);
