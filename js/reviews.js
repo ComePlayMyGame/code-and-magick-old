@@ -81,7 +81,7 @@
 
   /**
    *
-   * @param {Array.<object>} reviews
+   * @param {Array.<Object>} reviews
    + @param {number} pageNumber
    + @param {boolean=} replace
    * */

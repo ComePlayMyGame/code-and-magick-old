@@ -109,7 +109,7 @@
    * Обработчик события клика на кнопку ESC, которая скрывает галерею при нажатии на кнопку
    * @method _onDocumentKeyDown
    * @private
-   * @param evt
+   * @param {Event} evt
    * */
   Gallery.prototype._onDocumentKeyDown = function(evt) {
     if (evt.keyCode === 27) {

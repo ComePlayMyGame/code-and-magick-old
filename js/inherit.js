@@ -4,8 +4,8 @@
   /**
    * Функция принимает два конструктора и записывает в прототип дочернего
    * конструктора child методы и свойства родительского конструктора parent через пустой конструктор
-   * @param {object} Child
-   * @param {object} Parent
+   * @param {Object} Child
+   * @param {Object} Parent
    * */
   function inherit(Child, Parent) {
     var EmptyCtor = function() {};
