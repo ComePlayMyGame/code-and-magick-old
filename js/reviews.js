@@ -1,7 +1,7 @@
-/*global Review*/
 'use strict';
 
 (function() {
+  var Review = require('review');
   var reviewsFilterContainer = document.querySelector('.reviews-filter');
   var reviewsListContainer = document.querySelector('.reviews-list');
   var reviewsSection = document.querySelector('.reviews');
