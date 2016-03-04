@@ -12,11 +12,11 @@
 
   gallery.setPictures(currentPhotoGallery);
 
-  currentPhotoGallery.forEach(function(photo) {
+  currentPhotoGallery.forEach(function(photo, index) {
     photo.element.addEventListener('click', function(evt) {
       evt.preventDefault();
       gallery.show();
-      gallery.setCurrentPicture(photo.index);
+      gallery.setCurrentPicture(index);
     });
   });
 })();

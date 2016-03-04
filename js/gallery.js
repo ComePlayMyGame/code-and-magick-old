@@ -33,9 +33,9 @@
     document.removeEventListener('keydown', this._onDocumentKeyDown);
   };
 
-  Gallery.prototype.setPictures = function(Photo) {
-    this.Photos = Photo.slice(0);
-    this.totalPhotosNumber = this.Photos.length;
+  Gallery.prototype.setPictures = function(photo) {
+    this.photos = photo;
+    this.totalPhotosNumber = this.photos.length;
   };
 
   Gallery.prototype.setCurrentPicture = function(number) {
@@ -43,12 +43,14 @@
     var currentImage = new Image();
     this.currentImageCounter = number;
 
+    this.currentPicture = this.photos[number];
+    currentImage.src = this.currentPicture.element.firstChild.src;
     if (previousImage) {
-      this.previewContainer.removeChild(previousImage);
+      this.previewContainer.replaceChild(currentImage, previousImage);
     }
     this.previewContainer.appendChild(currentImage);
     this.currentPhotoNumberElement.textContent = number + 1;
-    this.totalPhotosNumberElement.textContent = this.Photos.length;
+    this.totalPhotosNumberElement.textContent = this.photos.length;
   };
 
   Gallery.prototype._onCloseClick = function() {
