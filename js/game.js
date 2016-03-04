@@ -254,7 +254,7 @@
     clearTimeout(pageScrollTimeout);
     pageScrollTimeout = setTimeout(function() {
       if (demoBlock.getBoundingClientRect().bottom <= 0) {
-        game.setGameStatus(window.Game.Verdict.PAUSE);
+        game.setGameStatus(Game.Verdict.PAUSE);
       }
       isCloudsVisible = cloudsOffset > 0;
     }, CLOUDS_TIMEOUT);
@@ -745,10 +745,11 @@
     }
   };
 
-  window.Game = Game;
-  window.Game.Verdict = Verdict;
+  Game.Verdict = Verdict;
 
   var game = new Game(document.querySelector('.demo'));
   game.initializeLevelAndStart();
-  game.setGameStatus(window.Game.Verdict.INTRO);
+  game.setGameStatus(Game.Verdict.INTRO);
+
+  module.exports = Game;
 })();
