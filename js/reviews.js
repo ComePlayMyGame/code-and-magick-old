@@ -24,7 +24,8 @@
   var xhr = new XMLHttpRequest();
   var loadedReviews = [];
   var filteredReviews = [];
-  var activeFilter = 'reviews-all';
+  var activeFilter = localStorage.getItem('activeFilter') || 'reviews-all';
+
   /**
    * Размер одной страницы отзывов
    * @const {number}
@@ -65,7 +66,7 @@
     xhr.onload = function(evt) {
       loadedReviews = JSON.parse(evt.target.response);
       filteredReviews = loadedReviews;
-      renderReviews(loadedReviews, currentPage, true);
+      setActiveFilter(activeFilter);
       reviewsSection.classList.remove('reviews-list-loading');
     };
     xhr.error = function() {
@@ -115,15 +116,11 @@
   function setActiveFilter(id) {
     var renderedElements = reviewsListContainer.querySelectorAll('.review');
 
-    if (activeFilter === id) {
-      return;
-    }
     currentPage = 0;
     filteredReviews = loadedReviews.slice(0);
     switch (id) {
       case 'reviews-all':
         filteredReviews = loadedReviews;
-        activeFilter = 'reviews-all';
         break;
       case 'reviews-recent':
         filteredReviews = filteredReviews.filter(function(item) {
@@ -131,7 +128,6 @@
         }).sort(function(a, b) {
           return Date.parse(b.date) - Date.parse(a.date);
         });
-        activeFilter = 'reviews-recent';
         break;
       case 'reviews-good':
         filteredReviews = filteredReviews.filter(function(item) {
@@ -139,7 +135,6 @@
         }).sort(function(a, b) {
           return b.rating - a.rating;
         });
-        activeFilter = 'reviews-good';
         break;
       case 'reviews-bad':
         filteredReviews = filteredReviews.filter(function(item) {
@@ -147,15 +142,16 @@
         }).sort(function(a, b) {
           return a.rating - b.rating;
         });
-        activeFilter = 'reviews-bad';
         break;
       case 'reviews-popular':
         filteredReviews = filteredReviews.sort(function(a, b) {
           return b.review_usefulness - a.review_usefulness;
         });
-        activeFilter = 'reviews-popular';
         break;
     }
+    activeFilter = id;
+    reviewsFilterContainer[activeFilter].checked = true;
+    localStorage.setItem('activeFilter', id);
 
     Array.prototype.forEach.call(renderedElements, function(element) {
       reviewsListContainer.removeChild(element);
