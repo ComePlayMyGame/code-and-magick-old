@@ -47,8 +47,11 @@
     currentImage.src = this.currentPicture.element.firstChild.src;
     if (previousImage) {
       this.previewContainer.replaceChild(currentImage, previousImage);
+      console.log('yahoo');
+    } else {
+      this.previewContainer.appendChild(currentImage);
+      console.log('noope');
     }
-    this.previewContainer.appendChild(currentImage);
     this.currentPhotoNumberElement.textContent = number + 1;
     this.totalPhotosNumberElement.textContent = this.photos.length;
   };
