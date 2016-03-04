@@ -4,7 +4,7 @@
   function inherit(Child, Parent) {
     var EmptyCtor = function() {};
     EmptyCtor.prototype = Parent.prototype;
-    Child.prototype = Object.create(EmptyCtor.prototype);
+    Child.prototype = new EmptyCtor();
   }
   window.inherit = inherit;
 })();
